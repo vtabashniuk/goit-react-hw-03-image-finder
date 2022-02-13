@@ -17,17 +17,17 @@ class Searchbar extends Component {
 
   onSubmitHandler = (event) => {
     event.preventDefault();
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(this.state.searchQuery);
     this.resetForm();
   };
 
   render() {
-    const formButtonOption = { type: "submit", label: "Search" };
+    const formButtonOptions = { type: "submit", label: "Search" };
     return (
       <>
         <header className="searchbar">
           <form className="form" onSubmit={this.onSubmitHandler}>
-            <Button option={formButtonOption} />
+            <Button options={formButtonOptions} />
             <input
               className="input"
               type="text"

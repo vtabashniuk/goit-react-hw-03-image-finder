@@ -1,9 +1,10 @@
 import React from "react";
 
-const Button = ({ option }) => {
+const Button = ({ options }) => {
+  const { type, label, onClick } = options;
   return (
-    <button type={option.type} className="button">
-      <span className="button-label">{option.label}</span>
+    <button type={type} className="button" onClick={onClick}>
+      <span className="button-label">{label}</span>
     </button>
   );
 };

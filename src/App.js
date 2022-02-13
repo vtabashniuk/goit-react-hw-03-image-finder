@@ -1,38 +1,50 @@
 import React, { Component } from "react";
-import axios from "axios";
+import getImages from "./api/getImages";
 import Searchbar from "./Searchbar";
+import ImageGallery from "./ImageGallery";
+
+const INITIAL_STATE = {
+  imagesCollection: [],
+  currentPage: 1,
+  searchQuery: "",
+};
 
 class App extends Component {
   state = {
+    imagesCollection: [],
+    currentPage: 1,
     searchQuery: "",
   };
 
-  formSubmitHandler = (data) => {
-    this.setState({ ...data });
+  formSubmitHandler = (query) => {
+    this.setState({ ...INITIAL_STATE, searchQuery: query });
+  };
+
+  fetchImages = () => {
+    const { searchQuery, currentPage } = this.state;
+    getImages(searchQuery, currentPage).then((data) => {
+      this.setState((prevState) => ({
+        imagesCollection: [...prevState.imagesCollection, ...data],
+        currentPage: prevState.currentPage + 1,
+      }));
+    });
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const query = this.state.searchQuery;
-    const BASE_URL = "https://pixabay.com/api/";
-    const axiosParams = {
-      params: {
-        key: "22416794-3b1c3083ab7ce728d60190093",
-        q: query,
-        image_type: "photo",
-        orientation: "horizontal",
-        per_page: 12,
-      },
-    };
-    axios
-      .get(BASE_URL, axiosParams)
-      .then((response) => console.log(response.data.hits));
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.fetchImages();
+    }
   }
 
   render() {
     return (
       <>
         <h1 className="title">Homework 3</h1>
-        <Searchbar onSubmit={this.formSubmitHandler}></Searchbar>
+        <Searchbar onSubmit={this.formSubmitHandler} />
+        <ImageGallery
+          images={this.state.imagesCollection}
+          loadMore={this.fetchImages}
+        />
       </>
     );
   }
