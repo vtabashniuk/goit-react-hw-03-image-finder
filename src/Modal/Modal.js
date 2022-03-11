@@ -1,9 +1,18 @@
 import React, { Component } from "react";
+import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
+
+const modalRoot = document.querySelector("#modal-root");
 
 class Modal extends Component {
   escapeKeyDownHandler = (e) => {
     if (e.code === "Escape") {
+      this.props.onClose();
+    }
+  };
+
+  backdropClickHandler = (e) => {
+    if (e.target === e.currentTarget) {
       this.props.onClose();
     }
   };
@@ -17,12 +26,13 @@ class Modal extends Component {
   }
 
   render() {
-    return (
-      <div className={styles.backdrop}>
+    return createPortal(
+      <div className={styles.backdrop} onClick={this.backdropClickHandler}>
         <div className={styles.modal}>
-          <img src={this.props.largeImageURL} alt={this.props.tags} />
+          {this.props.children}
         </div>
-      </div>
+      </div>,
+      modalRoot
     );
   }
 }

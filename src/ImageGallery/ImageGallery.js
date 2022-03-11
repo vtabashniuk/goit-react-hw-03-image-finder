@@ -5,7 +5,6 @@ import Button from "../Button";
 const ImageGallery = ({ images, loadMore, onImageClickHandler }) => (
   <>
     <ul className="gallery">
-      {console.log(typeof(onImageClickHandler))}
       {images.map((image) => {
         const { id, webformatURL, tags } = image;
         return (

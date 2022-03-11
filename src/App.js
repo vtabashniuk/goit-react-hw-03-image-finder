@@ -20,6 +20,7 @@ class App extends Component {
     isLoading: false,
     showModal: false,
     modalImage: {},
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -41,7 +42,6 @@ class App extends Component {
 
   onImageClickHandler = (id) => {
     this.toggleModal();
-    console.log("id", id);
     const { largeImageURL, tags } = this.state.imagesCollection.find(
       (image) => image.id === id
     );
@@ -50,7 +50,6 @@ class App extends Component {
 
   fetchImages = () => {
     const { searchQuery, currentPage } = this.state;
-    // this.toggleModal();
     this.setState({ isLoading: true });
     getImages(searchQuery, currentPage)
       .then((data) => {
@@ -59,22 +58,39 @@ class App extends Component {
           currentPage: prevState.currentPage + 1,
         }));
       })
-      .finally(
-        // this.toggleModal
-        () => this.setState({ isLoading: false })
-      );
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          console.log("bad response");
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+          console.log("bad request");
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+        // console.log(error.config);
+      })
+      // .catch(() => console.log("error"))
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   render() {
+    const { largeImageURL, tags } = this.state.modalImage;
     return (
       <>
         <h1 className="title">Homework 3</h1>
         {this.state.showModal && (
-          <Modal
-            largeImageURL={this.state.modalImage.largeImageURL}
-            tags={this.state.modalImage.tags}
-            onClose={this.toggleModal}
-          />
+          <Modal onClose={this.toggleModal}>
+            <img src={largeImageURL} alt={tags} width="100%" height="100%" />
+          </Modal>
         )}
         {this.state.isLoading && (
           <BallTriangle
