@@ -4,15 +4,16 @@ import Button from "../Button";
 class Searchbar extends Component {
   state = {
     searchQuery: "",
+    isDisabledSearchBtn: true,
   };
 
   resetForm() {
-    this.setState({ searchQuery: "" });
+    this.setState({ searchQuery: "", isDisabledSearchBtn: true });
   }
 
   onSearchHandler = (event) => {
     const inputValue = event.currentTarget.value;
-    this.setState({ searchQuery: inputValue });
+    this.setState({ searchQuery: inputValue, isDisabledSearchBtn: false });
   };
 
   onSubmitHandler = (event) => {
@@ -22,14 +23,20 @@ class Searchbar extends Component {
   };
 
   render() {
-    const formButtonOptions = { type: "submit", label: "Search" };
+    const formButtonOptions = {
+      className: "SearchForm-button",
+      labelClass: "SearchForm-button-label",
+      type: "submit",
+      label: "Search",
+      isDisabled: this.state.isDisabledSearchBtn
+    };
     return (
       <>
-        <header className="searchbar">
-          <form className="form" onSubmit={this.onSubmitHandler}>
+        <header className="Searchbar">
+          <form className="SearchForm" onSubmit={this.onSubmitHandler}>
             <Button options={formButtonOptions} />
             <input
-              className="input"
+              className="SearchForm-input"
               type="text"
               autoComplete="off"
               autoFocus

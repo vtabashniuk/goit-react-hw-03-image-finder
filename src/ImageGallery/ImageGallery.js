@@ -2,9 +2,14 @@ import React from "react";
 import ImageGalleryItem from "../ImageGalleryItem";
 import Button from "../Button";
 
-const ImageGallery = ({ images, loadMore, onImageClickHandler }) => (
+const ImageGallery = ({
+  images,
+  loadMore,
+  onImageClickHandler,
+  showButton,
+}) => (
   <>
-    <ul className="gallery">
+    <ul className="ImageGallery">
       {images.map((image) => {
         const { id, webformatURL, tags } = image;
         return (
@@ -15,13 +20,16 @@ const ImageGallery = ({ images, loadMore, onImageClickHandler }) => (
         );
       })}
     </ul>
-    <Button
-      options={{
-        type: "button",
-        label: "Load more",
-        onClick: loadMore,
-      }}
-    />
+    {showButton && (
+      <Button
+        options={{
+          className: "Button",
+          type: "button",
+          label: "Load more...",
+          onClick: loadMore,
+        }}
+      />
+    )}
   </>
 );
 

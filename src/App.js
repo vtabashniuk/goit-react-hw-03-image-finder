@@ -86,26 +86,31 @@ class App extends Component {
     const { largeImageURL, tags } = this.state.modalImage;
     return (
       <>
-        <h1 className="title">Homework 3</h1>
+        <h1 className="title">Homework 3. Task 3.2</h1>
         {this.state.showModal && (
           <Modal onClose={this.toggleModal}>
-            <img src={largeImageURL} alt={tags} width="100%" height="100%" />
+            <img className="modal-image" src={largeImageURL} alt={tags} />
           </Modal>
         )}
         {this.state.isLoading && (
-          <BallTriangle
-            heigth={100}
-            width={100}
-            color="green"
-            ariaLabel="loading-indicator"
-          />
+          <Modal>
+            <BallTriangle
+              heigth={100}
+              width={100}
+              color="green"
+              ariaLabel="loading-indicator"
+            />
+          </Modal>
         )}
-        <Searchbar onSubmit={this.formSubmitHandler} />
-        <ImageGallery
-          images={this.state.imagesCollection}
-          loadMore={this.fetchImages}
-          onImageClickHandler={this.onImageClickHandler}
-        />
+        <div className="App">
+          <Searchbar onSubmit={this.formSubmitHandler} />
+          <ImageGallery
+            images={this.state.imagesCollection}
+            loadMore={this.fetchImages}
+            onImageClickHandler={this.onImageClickHandler}
+            showButton={this.state.imagesCollection.length !==0}
+          />
+        </div>
       </>
     );
   }

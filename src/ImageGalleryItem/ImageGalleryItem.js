@@ -5,8 +5,8 @@ const ImageGalleryItem = ({ options }) => {
 
   return (
     <>
-      <li className="gallery-item" onClick={() => onImageClickHandler(id)}>
-        <img src={webformatURL} alt={tags} />
+      <li className="ImageGalleryItem" onClick={() => onImageClickHandler(id)}>
+        <img className="ImageGalleryItem-image" src={webformatURL} alt={tags} />
       </li>
     </>
   );
