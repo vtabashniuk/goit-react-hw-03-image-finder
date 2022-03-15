@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Button from "../Button";
 
 class Searchbar extends Component {
@@ -28,7 +29,7 @@ class Searchbar extends Component {
       labelClass: "SearchForm-button-label",
       type: "submit",
       label: "Search",
-      isDisabled: this.state.isDisabledSearchBtn
+      isDisabled: this.state.isDisabledSearchBtn,
     };
     return (
       <>
@@ -51,4 +52,5 @@ class Searchbar extends Component {
   }
 }
 
+Searchbar.propTypes = { onSubmit: PropTypes.func };
 export default Searchbar;

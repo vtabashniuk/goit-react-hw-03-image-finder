@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ImageGalleryItem from "../ImageGalleryItem";
 import Button from "../Button";
 
@@ -33,4 +34,10 @@ const ImageGallery = ({
   </>
 );
 
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.object),
+  loadMore: PropTypes.func,
+  onImageClickHandler: PropTypes.func,
+  showButton: PropTypes.bool,
+};
 export default ImageGallery;

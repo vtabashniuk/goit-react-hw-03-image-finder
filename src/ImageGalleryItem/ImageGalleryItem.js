@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const ImageGalleryItem = ({ options }) => {
   const { id, webformatURL, tags, onImageClickHandler } = options;
@@ -10,5 +11,14 @@ const ImageGalleryItem = ({ options }) => {
       </li>
     </>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  options: PropTypes.shape({
+    id: PropTypes.any,
+    webformatURL: PropTypes.string,
+    tags: PropTypes.string,
+    onImageClickHandler: PropTypes.func,
+  }),
 };
 export default ImageGalleryItem;
